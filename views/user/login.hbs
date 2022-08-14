@@ -1,0 +1,28 @@
+        <!-- Pills navs -->
+<div class="container mt-5">
+    <h1 class="text-center">Login</h1>
+                <form action="/login" method="post">
+                    
+                    {{#if loginErr}}
+                    <p class="error">{{loginErr}}</p>
+                    {{/if}}
+
+                    <div class="form-outline mb-4">
+                        <input type="email" id="loginName" class="form-control"  name="Email"/>
+                        <label class="form-label" for="loginName">Email address</label>
+                    </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" id="loginPassword" class="form-control" name="Password" />
+                        <label class="form-label" for="loginPassword">Password</label>
+                    </div>
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+
+                    <!-- Register buttons -->
+                    <div class="text-center">
+                        <p><a href="/signup">Create new account</a></p>
+                    </div>
+                </form>
+            </div>  
+</div>

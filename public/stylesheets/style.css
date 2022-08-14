@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.cart-item-count{
+    background-color: rgb(155, 155, 155);
+    width: 30px;
+    border-style: none;
+    text-align: center;
+    color: white;
+    margin-left: 15px;
+   
+}
+.placeorder{
+    margin-top: 50px;
+    position: relative;
+    left: 150px;
+    
+}
+.checkout{
+    border: solid black;
+    height: 240px;
+}
