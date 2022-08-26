@@ -14,7 +14,7 @@ module.exports = {
         db.get().collection('product').insertOne(product).then((data) => {          //db getting data (db) object from get function from connetion.js-in connecion.js the db come from app.js reson is there is where db is running or created or connected (config file)
             console.log(data)                                                      //in product contain data from.req.body from admin.js add product
             callback(data.insertedId)                                                   //this id from database id from mogodb collection-oroduct-document the document id to save the image to our file the reason for image uniqness to keep every image different id
-                                                                                 //the callback contain id from db document after the insertion then the id pass in callback form for image saving with this id    //next the callback go to admin.js  where the callback function working and writted(id)then it add id with image 
+             console.log('inserted data id@@@@@@@@@@@@@'+data.insertedId)                                                                    //the callback contain id from db document after the insertion then the id pass in callback form for image saving with this id    //next the callback go to admin.js  where the callback function working and writted(id)then it add id with image 
         })
 
     },

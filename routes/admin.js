@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
 });
 router.get('/add-product', function (req, res) {              //the green add product button
   res.render('admin/add-products', { admin: true, })
+  
 })        //the submit button add-product//
 router.post('/add-product', function (req, res) {               //req.body pass throut next addproduct function
 

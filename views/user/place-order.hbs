@@ -13,6 +13,7 @@
 
                         <label for="">Mobile</label>
                         <input class="form-control" type="text" name="mobile" id="mobile">
+                        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -22,14 +23,14 @@
                         <div class="payment">
                             <p>Payment method</p>
                             <label class="radio-inline">
-                                <input type="radio" name="payment-methoad" value="COD" checked>COD
+                                <input type="radio" name="payment-method" value="COD" checked>COD
                             </label>
                             <br>
                             <label class="radio-inline mt-2">
-                                <input type="radio" name="payment-methoad" value="ONLINE">Online payment
+                                <input type="radio" name="payment-method" value="ONLINE">Online payment
                             </label>
 
-                            <button class="btn btn-primary float-right mt-5"> Checkout</button>
+                            <button class="btn btn-primary float-right mt-5" type="submit"> Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -37,3 +38,75 @@
         </form>
     </div>
 </section>
+<script>
+    $("#checkout-form").submit((e)=>{
+        e.preventDefault()// prevanting form submirtion
+        $.ajax({
+            url:'/place-order',
+            method:'post',
+            data:$('#checkout-form').serialize(),//serialize will helpusto get all datas from this form
+            success:(response)=>{
+                alert(response)
+                if(response.codSucess){
+                    location.href='/order-sucess'
+                }
+                else{
+                    razorpayPayment(response)//else onlinie paymen call thisfunction
+                }
+            }
+            
+        })
+    })
+
+    function razorpayPayment(order){
+        var options = {
+    "key": "rzp_test_xE9ViN7qNPez7M", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Ananthu company",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        //alert(response.razorpay_payment_id);
+       // alert(response.razorpay_order_id);
+        //alert(response.razorpay_signature)
+
+        verifyPayment(response,order)//this function again go to server//after getted order sucess callthis function//pass  this to server//order sucessfull details
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",//customer name and detals
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+  };
+  var rzp1 = new Razorpay(options);//this for the graphical interface to open
+    rzp1.open();
+
+}
+
+    function verifyPayment(payment,order){//in payment  alert(response.razorpay_payment_id);  alert(response.razorpay_signature) //alert(response.razorpay_order_id);   // alert(response.razorpay_signature)                                      
+        $.ajax({
+            url:'/verify-paymnent',  
+            data:{
+                payment,
+                order,
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.status){//if order sucess redirec to thispage
+                     location.href='/order-sucess'
+                }else{
+                    alert('payment failed')
+                }
+            }
+        })
+    }
+
+</script>
